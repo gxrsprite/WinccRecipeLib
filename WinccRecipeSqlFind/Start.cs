@@ -13,6 +13,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CCHMIRUNTIME;
+using Dapper;
+
 namespace WinccRecipeSqlFind
 {
     public partial class Start : Form
@@ -97,13 +99,8 @@ namespace WinccRecipeSqlFind
         {
             ArrayList DBNameList = new ArrayList();
             SqlConnection Connection = new SqlConnection(String.Format("Server=SQLNCLI11;Data Source={0};Integrated Security=SSPI", servername));
-            DataTable DBNameTable = new DataTable();
-            SqlDataAdapter Adapter = new SqlDataAdapter("select name from master..sysdatabases", Connection);
+            DataTable DBNameTable = Connection.ExecuteDataTable("select name from master..sysdatabases");
 
-            lock (Adapter)
-            {
-                Adapter.Fill(DBNameTable);
-            }
             foreach (DataRow row in DBNameTable.Rows)
             {
                 DBNameList.Add(row["name"]);

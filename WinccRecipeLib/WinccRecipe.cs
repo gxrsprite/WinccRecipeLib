@@ -13,10 +13,11 @@ using System.Data.Sql;
 using CCHMIRUNTIME;
 using System.Runtime.InteropServices;
 using System.IO;
+using Dapper;
 
 namespace WinccRecipeLib
 {
-    public partial class WinccRecipe: UserControl
+    public partial class WinccRecipe : UserControl
     {
         //实例化对象
         HMIRuntime hMI = new HMIRuntime();
@@ -46,11 +47,11 @@ namespace WinccRecipeLib
                 //sqlDataName =  INI_FILE_RD.InifileReadValue("配置", "数据库名称", INI_FILE_RD.iniPath);
                 GetRecipeData(); //获取一次数据
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+
         }
         /// <summary>
         /// 获取服务器名称和数据库名称
@@ -71,12 +72,12 @@ namespace WinccRecipeLib
                 }
                 return names;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return names;
             }
-            
+
         }
 
 
@@ -93,7 +94,7 @@ namespace WinccRecipeLib
                 {
                     recipeNameCbx.Items.Add(name.name.ToString());
                 }
-                if(int.Parse(INI_FILE_RD.InifileReadValue("配置", "列表索引", INI_FILE_RD.iniPath)) < recipeNameCbx.Items.Count)
+                if (int.Parse(INI_FILE_RD.InifileReadValue("配置", "列表索引", INI_FILE_RD.iniPath)) < recipeNameCbx.Items.Count)
                     recipeNameCbx.SelectedIndex = int.Parse(INI_FILE_RD.InifileReadValue("配置", "列表索引", INI_FILE_RD.iniPath));
             }
             catch (Exception ex)
@@ -149,23 +150,11 @@ namespace WinccRecipeLib
             List<MyRecipeStruct> data = new List<MyRecipeStruct>();
             //2.投递数据库查询 strconn 为数据库连接字符串
             SqlConnection Connection = new SqlConnection(strconn);
-            SqlCommand command = new SqlCommand(sql, Connection);
             //3.执行数据库查询获取返回值
             using (Connection)
             {
                 Connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    //创建结构体实例
-                    MyRecipeStruct myrecipe = new MyRecipeStruct();
-                    //获取ID信息
-                    myrecipe.id = reader.GetInt32(reader.GetOrdinal("ID"));
-                    //获取配方内名称信息
-                    myrecipe.name = reader.GetString(reader.GetOrdinal(recipeName));
-                    //添加到表格
-                    data.Add(myrecipe);
-                }
+                data = Connection.Query<MyRecipeStruct>(sql).ToList();
             }
             return data;
         }
@@ -217,13 +206,8 @@ namespace WinccRecipeLib
         {
             ArrayList DBNameList = new ArrayList();
             SqlConnection Connection = new SqlConnection(String.Format("Server=SQLNCLI11;Data Source={0};Integrated Security=SSPI", servername));
-            DataTable DBNameTable = new DataTable();
-            SqlDataAdapter Adapter = new SqlDataAdapter("select name from master..sysdatabases", Connection);
+            DataTable DBNameTable = Connection.ExecuteDataTable("select name from master..sysdatabases");
 
-            lock (Adapter)
-            {
-                Adapter.Fill(DBNameTable);
-            }
             foreach (DataRow row in DBNameTable.Rows)
             {
                 DBNameList.Add(row["name"]);
@@ -241,12 +225,12 @@ namespace WinccRecipeLib
             if (!winccProcessState) return;
             if (MessageBox.Show("确定要新建一个程序吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
             {
-                string dt = hMI.Tags[recipeName].Read(HMIReadType.hmiReadCache);
+                string dt = (string)(hMI.Tags[recipeName].Read(HMIReadType.hmiReadCache));
                 for (int i = 0; i < recipeNameCbx.Items.Count; i++)
                 {
-                    if(dt.Trim() == recipeNameCbx.Items[i].ToString())
+                    if (dt.Trim() == recipeNameCbx.Items[i].ToString())
                     {
-                        MessageBox.Show("程序名称不能有相同！", "提示",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                        MessageBox.Show("程序名称不能有相同！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                 }
@@ -256,7 +240,7 @@ namespace WinccRecipeLib
                 GetRecipeData(); //读取数据
                 if (recipeNameCbx.Items.Count > 0)
                     recipeNameCbx.SelectedIndex = recipeNameCbx.Items.Count - 1;
-            } 
+            }
         }
         /// <summary>
         /// 删除按钮事件
