@@ -14,6 +14,7 @@ using CCHMIRUNTIME;
 using System.Runtime.InteropServices;
 using System.IO;
 using Dapper;
+using Ruifei.Common;
 
 namespace WinccRecipeLib
 {
@@ -225,7 +226,7 @@ namespace WinccRecipeLib
             if (!winccProcessState) return;
             if (MessageBox.Show("确定要新建一个程序吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
             {
-                string dt = (string)(hMI.Tags[recipeName].Read(HMIReadType.hmiReadCache));
+                string dt = hMI.Tags[recipeName].Read(HMIReadType.hmiReadCache);
                 for (int i = 0; i < recipeNameCbx.Items.Count; i++)
                 {
                     if (dt.Trim() == recipeNameCbx.Items[i].ToString())

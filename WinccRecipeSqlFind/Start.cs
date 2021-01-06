@@ -12,15 +12,13 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CCHMIRUNTIME;
 using Dapper;
+using Ruifei.Common;
 
 namespace WinccRecipeSqlFind
 {
     public partial class Start : Form
     {
-
-        HMIRuntime hMI = new HMIRuntime();
         public Start()
         {
             InitializeComponent();
@@ -122,9 +120,9 @@ namespace WinccRecipeSqlFind
                     INI_FILE_RD.InifileWriteValue("配置", "数据库名称", sqlDataCbx.SelectedItem.ToString(), INI_FILE_RD.iniPath);
                     INI_FILE_RD.InifileWriteValue("配置", "列表索引", "0", INI_FILE_RD.iniPath);
                     System.Threading.Thread.Sleep(500);//
-                    if (INI_FILE_RD.InifileReadValue("配置", "服务器名称", INI_FILE_RD.iniPath) == serverNameCbx.SelectedItem.ToString() && 
+                    if (INI_FILE_RD.InifileReadValue("配置", "服务器名称", INI_FILE_RD.iniPath) == serverNameCbx.SelectedItem.ToString() &&
                         INI_FILE_RD.InifileReadValue("配置", "数据库名称", INI_FILE_RD.iniPath) == sqlDataCbx.SelectedItem.ToString())
-                    MessageBox.Show("设置完成！", "提示");
+                        MessageBox.Show("设置完成！", "提示");
                 }
             }
             catch

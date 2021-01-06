@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
-namespace Dapper
+namespace Ruifei.Common
 {
     public static class SqlHelper
     {
