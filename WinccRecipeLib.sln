@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinccRecipeLib", "WinccReci
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinccRecipeSqlFind", "WinccRecipeSqlFind\WinccRecipeSqlFind.csproj", "{12BE6114-3A7B-4718-9BE6-73F219070C64}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestWInccAchive", "TestWInccAchive\TestWInccAchive.csproj", "{02254116-3211-4B25-BDE7-D09EAEC01278}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinccAchiveQueryTool", "WinccAchiveQueryTool\WinccAchiveQueryTool.csproj", "{5F5A3804-95DC-4D16-923B-9FB6FD6C0B18}"
 EndProject
 Global
@@ -35,14 +33,6 @@ Global
 		{12BE6114-3A7B-4718-9BE6-73F219070C64}.Release|Any CPU.Build.0 = Release|Any CPU
 		{12BE6114-3A7B-4718-9BE6-73F219070C64}.Release|x86.ActiveCfg = Release|Any CPU
 		{12BE6114-3A7B-4718-9BE6-73F219070C64}.Release|x86.Build.0 = Release|Any CPU
-		{02254116-3211-4B25-BDE7-D09EAEC01278}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{02254116-3211-4B25-BDE7-D09EAEC01278}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{02254116-3211-4B25-BDE7-D09EAEC01278}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{02254116-3211-4B25-BDE7-D09EAEC01278}.Debug|x86.Build.0 = Debug|Any CPU
-		{02254116-3211-4B25-BDE7-D09EAEC01278}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{02254116-3211-4B25-BDE7-D09EAEC01278}.Release|Any CPU.Build.0 = Release|Any CPU
-		{02254116-3211-4B25-BDE7-D09EAEC01278}.Release|x86.ActiveCfg = Release|Any CPU
-		{02254116-3211-4B25-BDE7-D09EAEC01278}.Release|x86.Build.0 = Release|Any CPU
 		{5F5A3804-95DC-4D16-923B-9FB6FD6C0B18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5F5A3804-95DC-4D16-923B-9FB6FD6C0B18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F5A3804-95DC-4D16-923B-9FB6FD6C0B18}.Debug|x86.ActiveCfg = Debug|Any CPU
